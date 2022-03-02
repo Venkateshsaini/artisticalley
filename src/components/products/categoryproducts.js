@@ -11,15 +11,31 @@ const [imgurl,setimgurl] = useState();
         const response = db.collection(`${category}`);
         const data = await response.get()
         data.docs.forEach(item=>{
-            setproducts([...products,item.data()])
+            const tmp = products;
+            tmp.push(item.data())
+            setproducts(tmp)
         })
-        storage.refFromURL(`gs://my-project-9a21a.appspot.com/${category}/craftzltd000/productimg.jpg/`).getDownloadURL().then((url)=>setimgurl(url));
+        storage.refFromURL(`gs://artistic-alley-official.appspot.com/${category}/craftzltd000/productimg.jpg/`).getDownloadURL().then((url)=>setimgurl(url));
+      
     }
 
     useEffect(()=>{
         fetchProducts();
       
     },[])
+const productscomponent =  products.map(product=>{
+    console.log(products)
+        return(
+            <div>
+            <div key = {product.name} >
+                 <Preview name = {product.name} instock = {true} price = {product.price} seller = {product.seller} img = {product.img} />
+                 {/* <img src = {imgurl}/> */}
+                 
+            </div>
+            </div>
+        )
+    })
+    
 
 return(
     <>
@@ -27,18 +43,7 @@ return(
     <div className = "flex flex-row justify-around w-5/6">
     <div className = "flex flex-col justify-around align-center">
       
- { products && products.map(product=>{
-     console.log(product.img)
-        return(
-            <div>
-            <div key = {product.id} >
-                 <Preview name = {product.name} instock = {true} price = {product.price} seller = {product.seller} img = {imgurl} />
-                 {/* <img src = {imgurl}/> */}
-                 
-            </div>
-            </div>
-        )
-    })}
+ { productscomponent}
 
    </div>
    </div>

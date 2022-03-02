@@ -11,11 +11,11 @@ import CartProduct from './components/cart/cartproduct';
 import CartPage from './components/cart/cartpage';
 function App() {
   return (
-    // <BrowserRouter>
-    // <Main/>
-    // </BrowserRouter>
+    <BrowserRouter>
+    <Main/>
+    </BrowserRouter>
     // <CategoryPage/>
-    <CartPage/>
+    // <CartPage/>
   );
 }
 
