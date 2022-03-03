@@ -1,7 +1,6 @@
 import React from 'react';
 import Category from './categorycard';
-import promo1 from '../../assets/promos/promo1.jpg';
-import promo2 from '../../assets/promos/promo2.jpg';
+
 import Header from '../header/header';
 const Home = () =>{
   

@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState ,useEffect} from "react";
 import login from "../../assets/login.png";
 import cart from "../../assets/cart.png";
 import setting from '../../assets/setting.png';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth,signInWithGoogle } from "../../firebase";
 import search from '../../assets/search.png';
 import menu from "../../assets/menu.png";
+
 const Header = () => {
+  const [status,setstatus] = useState("Login")
+  const [user, loading] = useAuthState(auth);
+  useEffect(() => {
+    if (loading) return;
+    if (user) setstatus("Log Out");
+  }, [user, loading]);
   return (
       <>
     <div className="flex flex-row justify-around">
@@ -35,8 +44,8 @@ const Header = () => {
 {/* BUTTONS */}
       <div className="flex flex-row justify-between  mx-2 my-2">
         <div className="flex flex-col justify-between text-black font-semibold mx-3  text-xl ">
-          <img src={login} alt="login" width = "50px" />
-          Login
+          <img src={login} alt="login" width = "50px" onClick = {signInWithGoogle} />
+          {status}
         </div>
         <div className="flex flex-col justify-between text-black font-semibold mx-2 text-xl ">
           <img src={setting} alt="setting"  width = "50px"  />

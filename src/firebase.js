@@ -1,8 +1,10 @@
 
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+// import  { GoogleAuthProvider,signInWithPopup, signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail } from 'firebase/compat/auth';
+// import { query,getDocs,collection,where ,addDoc} from 'firebase/compat/firestore'
+import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
+import 'firebase/compat/auth'
 const firebaseConfig = {
   apiKey: "AIzaSyDxIj19T0_Zz3tD-cvJWzZIHT_NCy9gt7I",
   authDomain: "artistic-alley-official.firebaseapp.com",
@@ -20,7 +22,54 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 const auth = firebase.auth();
 const storage = firebase.storage();
+ 
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+const signInWithGoogle = async () => {
+  try {
+    const res = await auth.signInWithPopup( googleProvider);
+    const user = res.user;
+    const q = db.query(db.collection("users"), db.where("uid", "==", user.uid));
+    const docs = await db.getDocs(q);
+    if (docs.docs.length === 0) {
+      await db.addDoc(db.collection( "users"), {
+        uid: user.uid,
+        name: user.displayName,
+        authProvider: "google",
+        email: user.email,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
 
 
-export {db,auth,storage} ;
+// const registerWithEmailAndPassword = async (name, email, password) => {
+//   try {
+//     const res = await createUserWithEmailAndPassword(auth, email, password);
+//     const user = res.user;
+//     await addDoc(collection(db, "users"), {
+//       uid: user.uid,
+//       name,
+//       authProvider: "local",
+//       email,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     alert(err.message);
+//   }
+// };
+const sendPasswordReset = async (email) => {
+  try {
+    await auth.sendPasswordResetEmail(auth, email);
+    alert("Password reset link sent!");
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
+export {db,auth,storage,signInWithGoogle,
+  sendPasswordReset} ;
 
