@@ -1,10 +1,13 @@
 
 import firebase from 'firebase/compat/app';
+
 // import  { GoogleAuthProvider,signInWithPopup, signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail } from 'firebase/compat/auth';
 // import { query,getDocs,collection,where ,addDoc} from 'firebase/compat/firestore'
 import 'firebase/compat/firestore'
+
 import 'firebase/compat/storage'
 import 'firebase/compat/auth'
+import {where ,query,collection,addDoc,getDocs} from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyDxIj19T0_Zz3tD-cvJWzZIHT_NCy9gt7I",
   authDomain: "artistic-alley-official.firebaseapp.com",
@@ -20,28 +23,47 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 // Use these for db & auth
 const db = firebaseApp.firestore();
+
 const auth = firebase.auth();
 const storage = firebase.storage();
- 
+
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const signInWithGoogle = async () => {
-  try {
+  // try {
     const res = await auth.signInWithPopup( googleProvider);
     const user = res.user;
-    const q = db.query(db.collection("users"), db.where("uid", "==", user.uid));
-    const docs = await db.getDocs(q);
+    const q = (db.collection('users'));
+    console.log("done");
+    const docs = await q.get();
     if (docs.docs.length === 0) {
-      await db.addDoc(db.collection( "users"), {
-        uid: user.uid,
-        name: user.displayName,
-        authProvider: "google",
-        email: user.email,
-      });
+      db.collection('users').add({
+        uid:user.uid,
+        name:user.displayName,
+        authprovider:'google',
+        email:user.email
+      })
     }
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
+    else{
+      docs.docs.forEach((item) => {
+        if (item.data().uid===user.uid){
+          console.log("user found");
+          return;
+        }
+      })
+        db.collection('users').add({
+          uid:user.uid,
+          name:user.displayName,
+          authprovider:'google',
+            email:user.email
+        })
+
+
+
+    }
+  // } catch (err) {
+    // console.error(err);
+    // alert(err.message);
+  // }
 };
 
 
@@ -70,6 +92,4 @@ const sendPasswordReset = async (email) => {
   }
 };
 
-export {db,auth,storage,signInWithGoogle,
-  sendPasswordReset} ;
-
+export {db,auth,storage,signInWithGoogle,sendPasswordReset} ;

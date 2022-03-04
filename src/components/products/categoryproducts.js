@@ -16,12 +16,12 @@ const [imgurl,setimgurl] = useState();
             setproducts(tmp)
         })
         storage.refFromURL(`gs://artistic-alley-official.appspot.com/${category}/craftzltd000/productimg.jpg/`).getDownloadURL().then((url)=>setimgurl(url));
-      
+
     }
 
     useEffect(()=>{
         fetchProducts();
-      
+
     },[])
 const productscomponent =  products.map(product=>{
     console.log(products)
@@ -30,26 +30,26 @@ const productscomponent =  products.map(product=>{
             <div key = {product.name} >
                  <Preview name = {product.name} instock = {true} price = {product.price} seller = {product.seller} img = {product.img} />
                  {/* <img src = {imgurl}/> */}
-                 
+
             </div>
             </div>
         )
     })
-    
+
 
 return(
     <>
     <Header/>
     <div className = "flex flex-row justify-around w-5/6">
     <div className = "flex flex-col justify-around align-center">
-      
+
  { productscomponent}
 
    </div>
    </div>
    </>
 )
-  
+
 
 }
 export default CategoryPage;

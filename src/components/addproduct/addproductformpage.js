@@ -19,7 +19,7 @@ const AddProduct = () =>{
     const required = (val) => val && val.length;
     const minprice = (min) => (val) => val && Number(val)>=min;
     const maxprice = (max) => (val) => val && Number(val)<=max;
-   
+
     const handleAddProducts=(e)=>{
         e.preventDefault();
         // console.log(title, description, price);
@@ -70,7 +70,7 @@ const AddProduct = () =>{
     {uploadError}
 <div className = "flex flex-col justify-between my-10 mx-10 ">
     <div className = "text-black font-semibold text-3xl my-10">Let's move to the next step..</div>
-    <div className = "text-black text-xl ">Enter the name of your product</div> 
+    <div className = "text-black text-xl ">Enter the name of your product</div>
     <Control.text
             model=".name"
             onChange = {(e)=>setName(e.target.value)}
@@ -93,14 +93,14 @@ const AddProduct = () =>{
               maxLength: "Name must be less than 40 characters",
             }}
           />
-    <div className = "text-black text-xl my-3 ">Select the Product Category from below list</div> 
+    <div className = "text-black text-xl my-3 ">Select the Product Category from below list</div>
 <Control.select model = ".category" id = "category" className = "bg-gray-300 w-3/6 font-semibold"  onChange = {(e)=>setcategory(e.target.value)}>
 <option value = "pottery">Pottery</option>
 <option value = "jewellery">Jewellery</option>
 <option value = "clothing">Clothing</option>
 <option value = "homedecor">Home Decor</option>
 </Control.select>
-<div className = "text-black text-xl my-3 ">Description of the product (External Links are not allowed) </div> 
+<div className = "text-black text-xl my-3 ">Description of the product (External Links are not allowed) </div>
 <Control.textarea model = ".description" id = "description"  onChange = {(e)=>setdescription(e.target.value)} className = "bg-gray-300 w-4/6"  validators={{
               required,
               minLength: minLength(25),
@@ -109,7 +109,7 @@ const AddProduct = () =>{
 <Errors
             className="text-red-800 font-semibold"
             model=".description"
-            
+
             show="touched"
             messages={{
               required: "Required!",
@@ -118,7 +118,7 @@ const AddProduct = () =>{
             }}
           />
 
-<div className = "text-black text-xl my-3 ">Set the Price expected for a single product(Read terms and conditions)</div> 
+<div className = "text-black text-xl my-3 ">Set the Price expected for a single product(Read terms and conditions)</div>
 <Control.text model = ".price" id = "price" className = "bg-gray-300 w-2/6" onChange = {(e)=> setprice(e.target.value)}  validators={{
               required,
               minprice: minprice(100),
@@ -127,7 +127,7 @@ const AddProduct = () =>{
 <Errors
             className="text-red-800 font-semibold"
             model=".price"
-            
+
             show="touched"
             messages={{
               required: "Required!",
@@ -135,12 +135,12 @@ const AddProduct = () =>{
               maxprice: " Seller not authorized to sell products more than 10000 ",
             }}
           />
-<div className = "text-black text-xl my-3 ">Upload the product's main profile image </div> 
+<div className = "text-black text-xl my-3 ">Upload the product's main profile image </div>
 <form onSubmit={handleAddProducts}>
-<input type="file" id="file" className='form-control' required 
+<input type="file" id="file" className='form-control' required
                 onChange={handleProductImg}></input>
 <div className = "text-red-800 font-semibold">{imageerror}</div>
-      
+
 {/* <div className = "text-black text-xl my-3 ">Upload the product's promotional images for carousels visible to users </div>  */}
 </form>
 </div>
