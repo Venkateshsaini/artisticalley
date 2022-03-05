@@ -30,6 +30,7 @@ const storage = firebase.storage();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const signInWithGoogle = async () => {
   // try {
+  let done = false
     const res = await auth.signInWithPopup( googleProvider);
     const user = res.user;
     const q = (db.collection('users'));
@@ -46,16 +47,21 @@ const signInWithGoogle = async () => {
     else{
       docs.docs.forEach((item) => {
         if (item.data().uid===user.uid){
-          console.log("user found");
+          // console.log("user found" , {item.data().uid});
+          done = true;
           return;
         }
       })
+      if (!done){
         db.collection('users').add({
           uid:user.uid,
           name:user.displayName,
           authprovider:'google',
             email:user.email
         })
+
+      }
+
 
 
 

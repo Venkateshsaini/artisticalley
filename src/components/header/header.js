@@ -6,7 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth,signInWithGoogle } from "../../firebase";
 import search from '../../assets/search.png';
 import menu from "../../assets/menu.png";
-
+import { NavLink } from "react-router-dom";
 const Header = () => {
   const [status,setstatus] = useState("Login")
   const [user, loading] = useAuthState(auth);
@@ -18,6 +18,8 @@ const Header = () => {
       <>
     <div className="flex flex-row justify-around">
 {/* BRANDING */}
+<NavLink to = "/home">
+<br/>
       <div className="flex flex-col justify-center">
         <div className="font-mono font-bold text-black text-3xl ">
           Artistic Alley
@@ -26,6 +28,7 @@ const Header = () => {
           The eHub for Artisans
         </div>
       </div>
+</NavLink>
 {/* SEARCH */}
 <div className = "flex flex-col justify-around w-3/6">
       <label className="relative block">
@@ -47,17 +50,14 @@ const Header = () => {
           <img src={login} alt="login" width = "50px" onClick = {signInWithGoogle} />
           {status}
         </div>
-        <div className="flex flex-col justify-between text-black font-semibold mx-2 text-xl ">
-          <img src={setting} alt="setting"  width = "50px"  />
-          Setting
-        </div>
+  
         <div className="flex flex-col justify-between text-black font-semibold mx-2 text-xl">
           <img src={cart} alt="cart"   width = "50px" />
           Cart
         </div>
       </div>
 
-  
+
     </div>
 <hr style = {{color:'black'}}/>
 <div className="flex flex-row justify-around my-2">

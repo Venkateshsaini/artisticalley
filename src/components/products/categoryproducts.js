@@ -6,6 +6,7 @@ import Header from '../header/header';
 const CategoryPage = () =>{
     const [products,setproducts] = useState([]);
 const category = "pottery"
+
 const [imgurl,setimgurl] = useState();
     const fetchProducts = async() =>{
         const response = db.collection(`${category}`);
@@ -29,7 +30,7 @@ const productscomponent =  products.map(product=>{
             <div>
             <div key = {product.name} >
                  <Preview name = {product.name} instock = {true} price = {product.price} seller = {product.seller} img = {product.img} />
-                 {/* <img src = {imgurl}/> */}
+
 
             </div>
             </div>

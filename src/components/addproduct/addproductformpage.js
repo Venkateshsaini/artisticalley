@@ -1,10 +1,12 @@
 import React, { useState ,useRef} from 'react';
 import Header from '../header/header';
 import { db, storage } from '../../firebase';
-
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Navigate, useNavigate } from 'react-router';
+import { auth } from "../../firebase";
 const AddProduct = () =>{
+  const [user] = useAuthState(auth)
     const [category,setcategory] = useState("")
     const [price,setprice] = useState(0)
     const [description,setdescription] = useState("")
@@ -19,6 +21,12 @@ const AddProduct = () =>{
     const required = (val) => val && val.length;
     const minprice = (min) => (val) => val && Number(val)>=min;
     const maxprice = (max) => (val) => val && Number(val)<=max;
+
+    if(!user){
+      alert("Please Login to continue");
+      navigate('/home');
+    }
+
 
     const handleAddProducts=(e)=>{
         e.preventDefault();
