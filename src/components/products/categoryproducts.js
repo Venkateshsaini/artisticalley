@@ -3,53 +3,59 @@ import {db} from '../../firebase';
 import Preview from './productpreview';
 import { storage } from '../../firebase';
 import Header from '../header/header';
+import {useParams} from 'react-router';
+import Loader from '../loader/Loader'
 const CategoryPage = () =>{
     const [products,setproducts] = useState([]);
-const category = "pottery"
-
+    const [productscomponent,setproductscomponent] = useState( <Loader/> )
+const {categoryid} = useParams()
+const category = categoryid
 const [imgurl,setimgurl] = useState();
     const fetchProducts = async() =>{
-        const response = db.collection(`${category}`);
+        const response = db.collection(`${category}`.toString());
         const data = await response.get()
+
         data.docs.forEach(item=>{
             const tmp = products;
             tmp.push(item.data())
             setproducts(tmp)
+            setproductscomponent( tmp.map(product=>{
+                console.log(products)
+                    return(
+                        <div>
+                        <div key = {product.name} >
+                             <Preview name = {product.name} instock = {true} price = {product.price} seller = {product.seller} img = {product.img} />
+
+
+                        </div>
+                        </div>
+                    )
+                }))
         })
-        storage.refFromURL(`gs://artistic-alley-official.appspot.com/${category}/craftzltd000/productimg.jpg/`).getDownloadURL().then((url)=>setimgurl(url));
+
 
     }
 
     useEffect(()=>{
         fetchProducts();
 
-    },[])
-const productscomponent =  products.map(product=>{
-    console.log(products)
-        return(
-            <div>
-            <div key = {product.name} >
-                 <Preview name = {product.name} instock = {true} price = {product.price} seller = {product.seller} img = {product.img} />
+    },[category])
 
 
-            </div>
-            </div>
-        )
-    })
+  return(
+      <>
+      <Header/>
+      <div className = "flex flex-row justify-around ">
+      <div className = "flex flex-col justify-around align-center">
+
+   { productscomponent}
+
+     </div>
+     </div>
+     </>
+  )
 
 
-return(
-    <>
-    <Header/>
-    <div className = "flex flex-row justify-around w-5/6">
-    <div className = "flex flex-col justify-around align-center">
-
- { productscomponent}
-
-   </div>
-   </div>
-   </>
-)
 
 
 }

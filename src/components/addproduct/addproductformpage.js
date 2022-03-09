@@ -1,16 +1,18 @@
 import React, { useState ,useRef} from 'react';
 import Header from '../header/header';
+import Loader from '../loader/Loader'
 import { db, storage } from '../../firebase';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Navigate, useNavigate } from 'react-router';
 import { auth } from "../../firebase";
 const AddProduct = () =>{
+
   const [user] = useAuthState(auth)
-    const [category,setcategory] = useState("")
-    const [price,setprice] = useState(0)
+    const [category,setcategory] = useState("pottery")
+    const [price,setprice] = useState("")
     const [description,setdescription] = useState("")
-    const [name,setName] = useState("")
+    const [name,setname] = useState("")
     const [image,setimage] = useState(null)
     const [imageerror,setimagerror] = useState("")
     const [uploadError,setUploadError] = useState("")
@@ -22,6 +24,7 @@ const AddProduct = () =>{
     const minprice = (min) => (val) => val && Number(val)>=min;
     const maxprice = (max) => (val) => val && Number(val)<=max;
 
+
     if(!user){
       alert("Please Login to continue");
       navigate('/home');
@@ -29,16 +32,18 @@ const AddProduct = () =>{
 
 
     const handleAddProducts=(e)=>{
+      setsubmitbutton(<Loader/>)
+      const key = name.replace(/\s/g, "")
         e.preventDefault();
         // console.log(title, description, price);
         // console.log(image);
-        const uploadTask=storage.ref(`pottery/craftzltd001/productimg`).put(image);
+        const uploadTask=storage.ref(`${category}/${key}/productimg`.toString()).put(image);
         uploadTask.on('state_changed',snapshot=>{
             const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
             console.log(progress);
         },error=>setUploadError(error.message),()=>{
-            storage.ref('pottery/craftzltd001/productimg').getDownloadURL().then(url=>{
-                db.collection('pottery').add({
+            storage.ref(`${category}/${key}/productimg`.toString()).getDownloadURL().then(url=>{
+                db.collection(`${category}`.toString()).add({
                     name:name,
                     description:description,
                     price: Number(price),
@@ -47,11 +52,13 @@ const AddProduct = () =>{
                     seller:'Craftsz Ltd'
                 }).then(()=>{
                     alert("product added");
+                    setsubmitbutton(<div className = " text-black font-semibold rounded-full px-2 py-2" >PRODUCT ADDED !!</div>)
                     navigate('/home')
-                }).catch(error=>setUploadError(error.message));
+                }).catch(error=>setUploadError(error.message) );
             })
         })
     }
+        const [submitbutton,setsubmitbutton] = useState()
     const handleProductImg=(e)=>{
         let selectedFile = e.target.files[0];
         if(selectedFile){
@@ -76,12 +83,12 @@ const AddProduct = () =>{
 <Header/>
 <LocalForm>
     {uploadError}
-<div className = "flex flex-col justify-between my-10 mx-10 ">
+<div className = "flex flex-col justify-between my-10 mx-10">
     <div className = "text-black font-semibold text-3xl my-10">Let's move to the next step..</div>
     <div className = "text-black text-xl ">Enter the name of your product</div>
     <Control.text
             model=".name"
-            onChange = {(e)=>setName(e.target.value)}
+            onChange = {(e)=>setname(e.target.value)}
             id="name"
             name="name"
             className="bg-gray-300 w-3/6"
@@ -152,9 +159,11 @@ const AddProduct = () =>{
 {/* <div className = "text-black text-xl my-3 ">Upload the product's promotional images for carousels visible to users </div>  */}
 </form>
 </div>
-
-<button onClick = {handleAddProducts}>SUBMIT</button>
-
+<div className = "flex flex-row justify-around wrap">
+<button className = "bg-black text-white font-semibold rounded-full px-2 py-2" onClick = {handleAddProducts}>SUBMIT</button>
+{submitbutton}
+</div>
+<br/><br/>
 </LocalForm>
 </>
     )

@@ -50,7 +50,7 @@ const Header = () => {
           <img src={login} alt="login" width = "50px" onClick = {signInWithGoogle} />
           {status}
         </div>
-  
+
         <div className="flex flex-col justify-between text-black font-semibold mx-2 text-xl">
           <img src={cart} alt="cart"   width = "50px" />
           Cart
@@ -67,7 +67,8 @@ const Header = () => {
 <button className = "text-black font-semibold hover:bg-gray-400 border-2 border-black my-1 px-2">Deals of the Day!</button>
 <button className = "text-black font-semibold hover:bg-gray-400 border-2 border-black my-1 px-2">Your Orders</button>
 <button className = "text-black font-semibold hover:bg-gray-400 border-2 border-black my-1 px-2">Customer Service</button>
-<button className = "text-black font-semibold hover:bg-gray-400 border-2 border-black my-1 px-2">Want to be a Seller?</button>
+
+<button className = "text-black font-semibold hover:bg-gray-400 border-2 border-black my-1 px-2">  <NavLink to = "/addproduct"> Sell With Us</NavLink></button>
 <button className = "text-black font-semibold hover:bg-gray-400 border-2 border-black my-1 px-2">Enter your Address</button>
 
 </div>

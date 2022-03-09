@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
+import Loader from '../loader/Loader'
 const Preview = (props) =>{
-    const [stockstatus,setstockstatus] = useState("Out Of Stock")
+    const [stockstatus,setstockstatus] = useState("Out Of Stock");
+    const [loading,setloading] = useState(<Loader/>)
     useEffect(()=>{
         if (props.instock){
             setstockstatus ("In Stock");
@@ -10,12 +11,13 @@ const Preview = (props) =>{
             setstockstatus("Out of stock");
         }
     },[])
-      
- 
+
+
 return(
-    <div className="flex font-sans w-4/6 my-3 ">
+    <div className="flex font-sans  my-3 ">
     <div className="flex-none w-48 relative">
-      <img src={props.img} alt="" className="absolute inset-0 w-full h-full object-cover" />
+    {loading}
+      <img src={props.img} alt="" className="absolute inset-0 w-full h-full object-cover" onLoad = {()=>setloading(null)}  />
     </div>
     <form className="flex-auto p-6">
       <div className="flex flex-wrap">
@@ -26,7 +28,7 @@ return(
         <div className="text-lg font-semibold text-slate-500">
         ₹{props.price}
         </div>
-  
+
       </div>
       <div className="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
         <div className="space-x-2 flex text-sm">
@@ -68,7 +70,7 @@ return(
       <div className="flex space-x-4 mb-6 text-sm font-medium">
         <div className="flex-auto flex space-x-4">
           <button className="h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
-            Buy now
+            EXPLORE
           </button>
           <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button">
             Add to bag
