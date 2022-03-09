@@ -46,15 +46,16 @@ const Header = () => {
       </div>
 {/* BUTTONS */}
       <div className="flex flex-row justify-between  mx-2 my-2">
-        <div className="flex flex-col justify-between text-black font-semibold mx-3  text-xl ">
+        <div className="flex flex-col justify-between text-black cursor-pointer font-semibold mx-3  text-xl ">
           <img src={login} alt="login" width = "50px" onClick = {signInWithGoogle} />
           {status}
         </div>
-
-        <div className="flex flex-col justify-between text-black font-semibold mx-2 text-xl">
+        <NavLink to = "/cart">
+        <div className="flex flex-col justify-between text-black cursor-pointer font-semibold mx-2 text-xl">
           <img src={cart} alt="cart"   width = "50px" />
           Cart
         </div>
+        </NavLink>
       </div>
 
 

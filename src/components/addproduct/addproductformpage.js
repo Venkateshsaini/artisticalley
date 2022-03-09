@@ -46,6 +46,7 @@ const AddProduct = () =>{
                 db.collection(`${category}`.toString()).add({
                     name:name,
                     description:description,
+                    id:Date.now().toString(36) + Math.random().toString(36).substr(2),
                     price: Number(price),
                     img:url,
                     category:category,
