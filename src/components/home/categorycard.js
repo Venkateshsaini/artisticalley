@@ -10,10 +10,10 @@ if (props.title === "clothing"){
   imgsrc = clothing;
 }
 else if (props.title === "pottery"){
-imgsrc = jewellery;
+imgsrc = pottery;
 }
 else{
-  imgsrc = pottery;
+  imgsrc = jewellery ;
 }
 
 return(
