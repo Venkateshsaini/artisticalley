@@ -14,22 +14,24 @@ const CartProduct = (props) =>{
 
       data.docs.forEach(item =>{
         const tmp = products;
+
         tmp.push(item.data())
         setproducts(tmp)
+
         setproductscomponent(tmp.map(product=>{
             if (product.id === id){
-              settotal(total+= Number(product.price));
+              settotal(total+Number(product.price));
               return(
-              <div  key = {product.id} className = "flex flex-row justify-around bg-gray-400 my-10 mx-10 rounded-full py-5">
+              <div  key = {product.id} className = "flex flex-row justify-around bg-gray-400 my-10 mx-10 rounded-full py-5 h-full">
               <div className="flex-none w-48 relative">
-              {loading}
-                <img src= {product.img} alt="" className="absolute inset-0 w-full h-full object-cover" onLoad = {()=>setloading(null)}  />
+
+                <img src= {product.img} alt="" className=" inset-0 w-full h-full " />
               </div>
                   <div className = "flex flex-col">
                       <div className = "text-black font-semibold text-xl text-center">{product.name}</div>
                       <div >"" </div>
                   </div>
-                  <div className = "flex flex-col ">
+                  <div className = "flex flex-col justify-around ">
                       <div className = "text-xl"> ${product.price} </div>
                       <button className = "bg-red-800 text-white font-semibold  py-3 px-3 rounded-full">Delete</button>
                   </div>
@@ -46,22 +48,9 @@ const CartProduct = (props) =>{
     useEffect(()=>{
         fetchProducts();
 
-    },[id])
+    },[])
 return(
-<div className = "flex flex-row justify-around bg-gray-400 my-10 mx-10 rounded-full py-5">
-<div className="flex-none w-48 relative">
-{loading}
-  <img src="#" alt="" className="absolute inset-0 w-full h-full object-cover" onLoad = {()=>setloading(null)}  />
-</div>
-    <div className = "flex flex-col">
-        <div className = "text-black font-semibold text-xl text-center">Text 1</div>
-        <div >Text2</div>
-    </div>
-    <div className = "flex flex-col ">
-        <div className = "text-xl">$1000</div>
-        <button className = "bg-red-800 text-white font-semibold  py-3 px-3 rounded-full">Delete</button>
-    </div>
-</div>
+productscomponent
 )
 }
 

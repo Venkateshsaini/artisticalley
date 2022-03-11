@@ -12,6 +12,9 @@ const Preview = (props) =>{
         }
     },[])
 
+const addToCart = () =>{
+
+}
 
 return(
     <div className="flex font-sans  my-3 ">
@@ -72,7 +75,7 @@ return(
           <button className="h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
             EXPLORE
           </button>
-          <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button">
+          <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button" onPress >
             Add to bag
           </button>
         </div>

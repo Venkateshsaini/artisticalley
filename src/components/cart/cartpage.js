@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react';
 import CartProduct from './cartproduct';
 import Loader from '../loader/Loader';
+import Header from '../header/header';
 import {db} from '../../firebase';
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -23,7 +24,17 @@ const CartPage = ()=>{
             setusers(tmp)
             tmp.map(dbuser =>{
               if (dbuser.uid === user.uid){
+                if (dbuser.cart.length === 0){
+                  setdisplay(<div> You have no products added in Cart </div>)
+                  return(null)
+                }
                 setcarts(dbuser.cart)
+                setdisplay(dbuser.cart.map(item =>{
+                  console.log(item.category)
+                  return(
+                    <CartProduct category = {item.category} id = {item.id} />
+                  )
+                }))
                 console.log(dbuser.cart)
               }
             }  )
@@ -32,15 +43,7 @@ const CartPage = ()=>{
 
     }
 
-    const showcart = () =>{
-      setdisplay(carts.map(item =>{
-        console.log(item.category)
-        return(
-          <CartProduct category = {item.category} id = {item.id} />
-        )
-      }))
 
-    }
 
 
 useEffect(()=>{
@@ -51,12 +54,10 @@ useEffect(()=>{
   }
   else{
     fetchUser()
-    if (carts.length !==0){
-      showcart()
-    }
+
 
   }
-},[user])
+},[])
 
 
 
@@ -67,6 +68,7 @@ useEffect(()=>{
 
 return(
     <>
+    <Header/>
     {display}
     </>
 )
