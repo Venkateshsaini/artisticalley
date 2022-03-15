@@ -45,8 +45,8 @@ const [imgurl,setimgurl] = useState();
   return(
       <>
       <Header/>
-      <div className = "flex flex-row justify-around ">
-      <div className = "flex flex-col justify-around align-center">
+      <div className = "flex flex-col justify-around ">
+      <div className = "flex flex-row justify-around align-center flex-wrap">
 
    { productscomponent}
 

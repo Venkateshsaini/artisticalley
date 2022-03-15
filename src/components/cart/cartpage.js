@@ -6,12 +6,16 @@ import {db} from '../../firebase';
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
+import Checkout from './checkout';
 const CartPage = ()=>{
   const [uid,setuid] = useState("")
-    const [user] = useAuthState(auth)
+    const [user,loading] = useAuthState(auth)
     const [users,setusers] = useState([])
     const [display,setdisplay] = useState(<Loader/>)
+    const [showcheckout,setshowcheckout] = useState(false)
+    const [logindone,setlogindone] = useState(false)
     const [carts,setcarts] = useState([])
+    const [total,settotal] = useState(0)
     const navigate = useNavigate();
     const fetchUser = async() =>{
         const response = db.collection("users");
@@ -32,10 +36,11 @@ const CartPage = ()=>{
                 setdisplay(dbuser.cart.map(item =>{
                   console.log(item.category)
                   return(
-                    <CartProduct category = {item.category} id = {item.id} />
+                    <CartProduct category = {item.category} id = {item.id} settotal = {settotal} />
                   )
                 }))
-                console.log(dbuser.cart)
+                setshowcheckout(true)
+                // console.log(dbuser.cart)
               }
             }  )
         })
@@ -48,16 +53,24 @@ const CartPage = ()=>{
 
 useEffect(()=>{
 
-  if (!user){
+  if (user && !loading){
+   
+    fetchUser()
+  }
+  else if (!user && !loading){
+ 
     alert("please Login to proceed");
-    // navigate("/home")
+    navigate("/home")
+
   }
   else{
-    fetchUser()
-
-
+    return null
   }
-},[])
+
+
+
+
+},[user])
 
 
 
@@ -68,8 +81,11 @@ useEffect(()=>{
 
 return(
     <>
-    <Header/>
+    <Header setlogindone = {setlogindone}/>
+    <div className="flex flex-row text-black font-bold text-4xl my-4 justify-center">YOUR CART</div>
     {display}
+    <Checkout total = {total} showcheckout = {showcheckout} />
+  
     </>
 )
 }

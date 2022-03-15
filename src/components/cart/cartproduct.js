@@ -19,8 +19,9 @@ const CartProduct = (props) =>{
         setproducts(tmp)
 
         setproductscomponent(tmp.map(product=>{
+          props.settotal(prev=>prev+product.price);
             if (product.id === id){
-              settotal(total+Number(product.price));
+              settotal(total+Number(product.price));   
               return(
               <div  key = {product.id} className = "flex flex-row justify-around bg-gray-400 my-10 mx-10 rounded-full py-5 h-full">
               <div className="flex-none w-48 relative">
@@ -29,7 +30,7 @@ const CartProduct = (props) =>{
               </div>
                   <div className = "flex flex-col">
                       <div className = "text-black font-semibold text-xl text-center">{product.name}</div>
-                      <div >"" </div>
+                      <div >{product.description} </div>
                   </div>
                   <div className = "flex flex-col justify-around ">
                       <div className = "text-xl"> ${product.price} </div>

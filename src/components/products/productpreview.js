@@ -17,7 +17,7 @@ const addToCart = () =>{
 }
 
 return(
-    <div className="flex font-sans  my-3 ">
+    <div className="flex font-sans  my-3 border-8 ">
     <div className="flex-none w-48 relative">
     {loading}
       <img src={props.img} alt="" className="absolute inset-0 w-full h-full object-cover" onLoad = {()=>setloading(null)}  />
@@ -86,7 +86,7 @@ return(
         </button>
       </div>
       <p className="text-sm text-slate-700">
-        Free shipping on all continental US orders.
+        Free shipping to all  INDIAN  orders.
       </p>
     </form>
   </div>

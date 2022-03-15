@@ -7,13 +7,16 @@ import { auth,signInWithGoogle } from "../../firebase";
 import search from '../../assets/search.png';
 import menu from "../../assets/menu.png";
 import { NavLink } from "react-router-dom";
-const Header = () => {
+const Header = (props) => {
   const [status,setstatus] = useState("Login")
   const [user, loading] = useAuthState(auth);
+  
   useEffect(() => {
     if (loading) return;
+
     if (user) setstatus("Log Out");
-  }, [user, loading]);
+ 
+  }, []);
   return (
       <>
     <div className="flex flex-row justify-around">

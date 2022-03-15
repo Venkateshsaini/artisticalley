@@ -9,13 +9,15 @@ import {BrowserRouter} from 'react-router-dom'
 import Main from './components/main/main';
 import CartProduct from './components/cart/cartproduct';
 import CartPage from './components/cart/cartpage';
+import ProductMain from './components/products/productmainpage';
 function App() {
   return (
-    <BrowserRouter>
-    <Main/>
-    </BrowserRouter>
+    // <BrowserRouter>
+    // <Main/>
+    // </BrowserRouter>
     // <CategoryPage/>
     // <CartPage/>
+    <ProductMain/>
   );
 }
 
