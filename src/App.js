@@ -12,12 +12,12 @@ import CartPage from './components/cart/cartpage';
 import ProductMain from './components/products/productmainpage';
 function App() {
   return (
-    // <BrowserRouter>
-    // <Main/>
-    // </BrowserRouter>
+    <BrowserRouter>
+    <Main/>
+    </BrowserRouter>
     // <CategoryPage/>
     // <CartPage/>
-    <ProductMain/>
+    // <ProductMain/>
   );
 }
 

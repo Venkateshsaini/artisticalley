@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import Loader from '../loader/Loader'
 const Preview = (props) =>{
     const [stockstatus,setstockstatus] = useState("Out Of Stock");
     const [loading,setloading] = useState(<Loader/>)
+    const [prodId,setProdId] = useState(0)
     useEffect(()=>{
         if (props.instock){
             setstockstatus ("In Stock");
@@ -72,9 +74,11 @@ return(
       </div>
       <div className="flex space-x-4 mb-6 text-sm font-medium">
         <div className="flex-auto flex space-x-4">
+          <NavLink to = {`/${props.category}/product/${props.id}`}>
           <button className="h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
             EXPLORE
           </button>
+          </NavLink>
           <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button" onPress >
             Add to bag
           </button>

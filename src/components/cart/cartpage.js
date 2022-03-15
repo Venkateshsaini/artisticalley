@@ -67,17 +67,8 @@ useEffect(()=>{
     return null
   }
 
-
-
-
 },[user])
 
-
-
-// useEffect(()=>{
-//     fetchUser();
-//
-// },[uid])
 
 return(
     <>

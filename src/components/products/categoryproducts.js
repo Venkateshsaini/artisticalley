@@ -24,7 +24,7 @@ const [imgurl,setimgurl] = useState();
                     return(
                         <div>
                         <div key = {product.name} >
-                             <Preview name = {product.name} instock = {true} price = {product.price} seller = {product.seller} img = {product.img} />
+                             <Preview category = {product.category} id={item.id} name = {product.name} instock = {true} price = {product.price} seller = {product.seller} img = {product.img} />
 
 
                         </div>

@@ -5,6 +5,7 @@ import CategoryPage from "../products/categoryproducts";
 import AddProduct from "../addproduct/addproductformpage";
 import Dashboard from "../sellerdashboard/dashboardpage";
 import CartPage from '../cart/cartpage';
+import ProductMain from "../products/productmainpage";
 const Main = () =>{
 return(
     <Routes>
@@ -14,6 +15,7 @@ return(
     <Route path = "/addproduct" element = {<AddProduct/>}/>
     <Route path = "/sellerdashboard" element = {<Dashboard/>}/>
     <Route path = "/cart" element = {<CartPage/>}/>
+    <Route path = "/:category/product/:productid" element = {<ProductMain/>}/>
     </Routes>
 )
 }
