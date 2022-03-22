@@ -13,7 +13,12 @@ const AddProduct = () =>{
     const [price,setprice] = useState("")
     const [description,setdescription] = useState("")
     const [name,setname] = useState("")
+    
     const [image,setimage] = useState(null)
+    const [carousel1,setcarousel1] = useState(null)
+    const [carousel2,setcarousel2] = useState(null)
+    const [carousel3,setcarousel3] = useState(null)
+    const [carousel4,setcarousel4] = useState(null)
     const [imageerror,setimagerror] = useState("")
     const [uploadError,setUploadError] = useState("")
     let navigate = useNavigate()
@@ -37,27 +42,75 @@ const AddProduct = () =>{
         e.preventDefault();
         // console.log(title, description, price);
         // console.log(image);
-        const uploadTask=storage.ref(`${category}/${key}/productimg`.toString()).put(image);
-        uploadTask.on('state_changed',snapshot=>{
+        let dp_url , c1_url,c2_url,c3_url,c4_url;
+        const uploadDp=storage.ref(`${category}/${key}/productimg`.toString()).put(image);
+        const uploadC1=storage.ref(`${category}/${key}/carousel1`.toString()).put(carousel1);
+        const uploadC2=storage.ref(`${category}/${key}/carousel2`.toString()).put(carousel2);
+        const uploadC3=storage.ref(`${category}/${key}/carousel3`.toString()).put(carousel3);
+        const uploadC4=storage.ref(`${category}/${key}/carousel4`.toString()).put(carousel4);
+        uploadDp.on('state_changed',snapshot=>{
             const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
             console.log(progress);
         },error=>setUploadError(error.message),()=>{
             storage.ref(`${category}/${key}/productimg`.toString()).getDownloadURL().then(url=>{
-                db.collection(`${category}`.toString()).add({
-                    name:name,
-                    description:description,
-                    id:Date.now().toString(36) + Math.random().toString(36).substr(2),
-                    price: Number(price),
-                    img:url,
-                    category:category,
-                    seller:'Craftsz Ltd'
-                }).then(()=>{
-                    alert("product added");
-                    setsubmitbutton(<div className = " text-black font-semibold rounded-full px-2 py-2" >PRODUCT ADDED !!</div>)
-                    navigate('/home')
-                }).catch(error=>setUploadError(error.message) );
+              dp_url=url;
             })
         })
+
+        uploadC1.on('state_changed',snapshot=>{
+          const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
+          console.log(progress);
+      },error=>setUploadError(error.message),()=>{
+          storage.ref(`${category}/${key}/carousel1`.toString()).getDownloadURL().then(url=>{
+            c1_url=url;
+          })
+      })
+
+      uploadC2.on('state_changed',snapshot=>{
+        const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
+        console.log(progress);
+    },error=>setUploadError(error.message),()=>{
+        storage.ref(`${category}/${key}/carousel2`.toString()).getDownloadURL().then(url=>{
+          c2_url=url;
+        })
+    })
+
+    uploadC3.on('state_changed',snapshot=>{
+      const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
+      console.log(progress);
+  },error=>setUploadError(error.message),()=>{
+      storage.ref(`${category}/${key}/carousel3`.toString()).getDownloadURL().then(url=>{
+        c3_url=url;
+      })
+  })
+
+  uploadC4.on('state_changed',snapshot=>{
+    const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
+    console.log(progress);
+},error=>setUploadError(error.message),()=>{
+    storage.ref(`${category}/${key}/carousel4`.toString()).getDownloadURL().then(url=>{
+      c4_url=url;
+    })
+})
+
+db.collection(`${category}`.toString()).add({
+          name:name,
+          description:description,
+          id:Date.now().toString(36) + Math.random().toString(36).substr(2),
+          price: Number(price),
+          img:dp_url,
+          carousel1:c1_url,
+          carousel2:c2_url,
+          carousel3:c3_url,
+          carousel4:c4_url,
+          category:category,
+          seller:'Craftsz Ltd'
+      }).then(()=>{
+          alert("product added");
+          setsubmitbutton(<div className = " text-black font-semibold rounded-full px-2 py-2" >PRODUCT ADDED !!</div>)
+          navigate('/home')
+      }).catch(error=>setUploadError(error.message) );
+
     }
         const [submitbutton,setsubmitbutton] = useState()
     const handleProductImg=(e)=>{
@@ -76,6 +129,70 @@ const AddProduct = () =>{
             console.log('please select your file');
         }
     }
+    const handleCarousel1=(e)=>{
+      let selectedFile = e.target.files[0];
+      if(selectedFile){
+          if(selectedFile&&types.includes(selectedFile.type)){
+              setcarousel1(selectedFile);
+              setimagerror('');
+          }
+          else{
+              setcarousel1(null);
+              setimagerror('please select a valid image file type (png or jpg)')
+          }
+      }
+      else{
+          console.log('please se  23lect your file');
+      }
+  }
+  const handleCarousel2=(e)=>{
+    let selectedFile = e.target.files[0];
+    if(selectedFile){
+        if(selectedFile&&types.includes(selectedFile.type)){
+            setcarousel2(selectedFile);
+            setimagerror('');
+        }
+        else{
+            setcarousel2(null);
+            setimagerror('please select a valid image file type (png or jpg)')
+        }
+    }
+    else{
+        console.log('please select your file');
+    }
+}
+const handleCarousel3=(e)=>{
+  let selectedFile = e.target.files[0];
+  if(selectedFile){
+      if(selectedFile&&types.includes(selectedFile.type)){
+          setcarousel3(selectedFile);
+          setimagerror('');
+      }
+      else{
+          setcarousel3(null);
+          setimagerror('please select a valid image file type (png or jpg)')
+      }
+  }
+  else{
+      console.log('please select your file');
+  }
+}
+const handleCarousel4=(e)=>{
+  let selectedFile = e.target.files[0];
+  if(selectedFile){
+      if(selectedFile&&types.includes(selectedFile.type)){
+          setcarousel4(selectedFile);
+          setimagerror('');
+      }
+      else{
+          setcarousel4(null);
+          setimagerror('please select a valid image file type (png or jpg)')
+      }
+  }
+  else{
+      console.log('please select your file');
+  }
+}
 
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const mail = (val) => val && val.match(mailformat);
@@ -84,7 +201,7 @@ const AddProduct = () =>{
 <Header/>
 <LocalForm>
     {uploadError}
-<div className = "flex flex-col justify-between my-10 mx-10">
+<div className = "flex flex-col justify-between my-10 mx-10 border-8 p-5">
     <div className = "text-black font-semibold text-3xl my-10">Let's move to the next step..</div>
     <div className = "text-black text-xl ">Enter the name of your product</div>
     <Control.text
@@ -157,10 +274,18 @@ const AddProduct = () =>{
                 onChange={handleProductImg}></input>
 <div className = "text-red-800 font-semibold">{imageerror}</div>
 
-{/* <div className = "text-black text-xl my-3 ">Upload the product's promotional images for carousels visible to users </div>  */}
+<div className = "text-black text-xl my-3 ">Upload the product's promotional images for carousels visible to users (must be in different angles)</div> 
+<input type="file" id="file1" className='form-control' required
+                onChange={handleCarousel1}></input>
+                <input type="file" id="file2" className='form-control' required
+                onChange={handleCarousel2}></input>
+                <input type="file" id="file3" className='form-control' required
+                onChange={handleCarousel3}></input>
+                        <input type="file" id="file4" className='form-control' required
+                onChange={handleCarousel4}></input>
 </form>
 </div>
-<div className = "flex flex-row justify-around wrap">
+<div className = "flex flex-row justify-around  ">
 <button className = "bg-black text-white font-semibold rounded-full px-2 py-2" onClick = {handleAddProducts}>SUBMIT</button>
 {submitbutton}
 </div>
