@@ -5,7 +5,7 @@ const Checkout = (props) =>{
 
     return(
         <>
-    {props.showcheckout &&
+    {
       <div className='bg-gray-400'>
           <div className='flex flex-row justify-center'>
         <div className='text-black font-semibold text-2xl my-3'>Total Items: </div>

@@ -1,6 +1,8 @@
 import React ,{useEffect, useState} from 'react';
 import Loader from '../loader/Loader';
 import {db} from '../../firebase';
+import { NavLink } from 'react-router-dom';
+import Checkout from './checkout';
 const CartProduct = (props) =>{
   const [id,setprodid] = useState(props.id)
     const [loading,setloading] = useState(<Loader/>)
@@ -33,9 +35,12 @@ const CartProduct = (props) =>{
                       <div >{product.description} </div>
                   </div>
                   <div className = "flex flex-col justify-around ">
-                      <div className = "text-xl"> ${product.price} </div>
+                      {/* <div className = "text-xl"> ${product.price} </div> */}
                       <button className = "bg-red-800 text-white font-semibold  py-3 px-3 rounded-full">Delete</button>
                   </div>
+                      <NavLink to ={ `/purchase/${product.id}`}>
+   <Checkout total = {product.price}  /> 
+   </NavLink>
               </div>
               )
 

@@ -3,10 +3,11 @@ import CartProduct from './cartproduct';
 import Loader from '../loader/Loader';
 import Header from '../header/header';
 import {db} from '../../firebase';
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import Checkout from './checkout';
+import PurchasePage from '../purchase/purchasepage';
 const CartPage = ()=>{
   const [uid,setuid] = useState("")
     const [user,loading] = useAuthState(auth)
@@ -39,7 +40,7 @@ const CartPage = ()=>{
                     <CartProduct category = {item.category} id = {item.id} settotal = {settotal} />
                   )
                 }))
-                setshowcheckout(true)
+                // setshowcheckout(true)
                 // console.log(dbuser.cart)
               }
             }  )
@@ -75,7 +76,7 @@ return(
     <Header setlogindone = {setlogindone}/>
     <div className="flex flex-row text-black font-bold text-4xl my-4 justify-center">YOUR CART</div>
     {display}
-    <Checkout total = {total} showcheckout = {showcheckout} />
+
   
     </>
 )
