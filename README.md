@@ -1,3 +1,6 @@
+The project we built for SIH 2022 which evetually came top 10 out of 75 teams in VITISH-2022 conducted by VIT Chennai and V-Nest .
+
+## About the project 
 An e-commerce website for communication between sellers and buyers.
 Bridge the gap between buyers and sellers by creating a user-friendly e-commerce website and Promote local artisans and handloom industry.
 Flexible payments methods for customers.
@@ -6,8 +9,8 @@ Automated quality check using object detection
 
 
 ## RUN FRONTEND
-4) Install react-app
-5) Then, run the development server:
+Install react-app and other dependencies
+Then, run the development server:
 
 ```bash
 npm install
@@ -40,6 +43,10 @@ https://youtu.be/an4Roh-YFdE
 Quick Webdev demo:-
 
 https://user-images.githubusercontent.com/64348740/204151832-f2a2ca38-d881-46ea-9f36-ecdce0e87974.mp4
+
+## MENTOR:-
+
+Dr.Prakash P
 
 ## MEMBERS:-
 
